@@ -1,0 +1,109 @@
+body {
+    --border-normal: var(--gray-5);
+    --border-hover: var(--primary-color);
+    --border-click: var(--click-color);
+
+    --danger-normal: var(--red-6);
+    --danger-hover: var(--red-5);
+    --danger-click: var(--red-7);
+
+    --secondary-color: var(--gray-10);
+}
+
+button.button {
+    background-color: inherit;
+    height: 30px;
+    width: calc(100% - 12px);
+    margin: 5px 5px;
+    border: none;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    svg {
+        margin: 0 6px 0 13px;
+        width: 22px;
+        height: 22px;
+    }
+
+    &:disabled {
+        background-color: var(--hover-color) !important;
+    }
+}
+
+button.button.primary {
+    color: var(--background-color);
+    border: 1px solid var(--click-color);
+
+    background-color: var(--primary-color);
+}
+
+button.button.primary:hover {
+    border: 1px solid var(--click-color);
+    background-color: var(--hover-color);
+
+    svg>path {
+        fill: var(--click-color);
+    }
+}
+
+button.button.primary:active {
+    border: 1px solid var(--hover-color);
+    background-color: var(--click-color);
+
+    svg>path {
+        fill: var(--hover-color);
+    }
+}
+
+button.button.text {
+    border: 0;
+
+    background-color: var(--background-color);
+
+    color: var(--primary-color);
+}
+
+button.button.text:hover {
+    color: var(--border-hover);
+}
+
+button.button.text:active {
+    color: var(--border-click);
+}
+
+button.button.secondary {
+    border: 1px solid var(--border-normal);
+
+    color: var(--secondary-color);
+}
+
+button.button.secondary:hover {
+    border: 1px solid var(--border-hover);
+
+    color: var(--border-hover);
+}
+
+button.button.secondary:active {
+    border: 1px solid var(--border-click);
+
+    color: var(--border-click);
+}
+
+button.button.danger {
+    border: 1px solid var(--danger-hover);
+    background-color: var(--danger-normal);
+}
+
+button.button.danger:hover {
+    border: 1px solid var(--danger-click);
+    background-color: var(--danger-hover);
+}
+
+button.button.danger:active {
+    border: 1px solid var(--danger-hover);
+    background-color: var(--danger-click);
+}

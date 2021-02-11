@@ -1,0 +1,61 @@
+// Variables
+@import "variables";
+@import "colors";
+
+:root {
+    --navbar-height: 64px;
+}
+
+*,
+:after,
+:before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    --background-color: var(--gray-1);
+    --primary-color: var(--blue-6);
+    --text-color: var(--gray-12);
+    --hover-color: var(--blue-5);
+    --click-color: var(--blue-6);
+    --error-color: var(--red-7);
+}
+
+html,
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+        'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+}
+
+[class*=crypto-],
+[class*=crypto-] *,
+[class*=crypto-] :after,
+[class*=crypto-] :before,
+[class^=crypto-],
+[class^=crypto-] *,
+[class^=crypto-] :after,
+[class^=crypto-] :before {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input,
+input:focus {
+    color: var(--text-color);
+    background-color: var(--background-color);
+    font-family: var(--font-family);
+    outline: none;
+    border: 0;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+}
+
+#crypto-layout {
+    padding-top: var(--navbar-height);
+}

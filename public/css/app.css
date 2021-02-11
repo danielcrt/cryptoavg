@@ -1,0 +1,23 @@
+:root {
+  --navbar-height: 64px;
+  --primary-color: #0371bc;
+  --navbar-background: #fff;
+  --navlink-border-color: #0371bc;
+  --menu-toggle-color: #fff;
+}
+
+html,
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+#crypto-layout {
+  padding-top: var(--navbar-height);
+}
+

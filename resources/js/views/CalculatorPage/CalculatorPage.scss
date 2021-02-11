@@ -1,0 +1,327 @@
+body {
+    --select-background: var();
+    --select-background: var();
+}
+
+.calculator-container {
+    margin: 0 auto;
+    max-width: 720px;
+    padding: 10px;
+}
+
+.crypto-select {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: var(--text-color);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    -webkit-font-feature-settings: "tnum";
+    font-feature-settings: "tnum";
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.crypto-select:not(.crypto-select-customize-input) .crypto-select-selector {
+    position: relative;
+    background-color: var(--gray-1);
+    border: 1px solid var(--gray-5);
+    border-radius: 2px;
+    -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+}
+
+.crypto-select-single:not(.crypto-select-customize-input) .crypto-select-selector {
+    width: 100%;
+    height: 32px;
+    padding: 0 11px;
+}
+
+.crypto-select-single .crypto-select-selector {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.crypto-select-single.crypto-select-show-arrow .crypto-select-selection-search {
+    right: 25px;
+}
+
+.crypto-select-single .crypto-select-selector .crypto-select-selection-search {
+    position: absolute;
+    top: 0;
+    right: 11px;
+    bottom: 0;
+    left: 11px;
+}
+
+.crypto-select-single.crypto-select-open .crypto-select-selection-item {
+    color: var(--gray-6);
+}
+
+.crypto-select-single.crypto-select-show-arrow .crypto-select-selection-item,
+.crypto-select-single.crypto-select-show-arrow .crypto-select-selection-placeholder {
+    padding-right: 18px;
+}
+
+.crypto-select-single .crypto-select-selector .crypto-select-selection-item {
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.crypto-select-single .crypto-select-selector .crypto-select-selection-item,
+.crypto-select-single .crypto-select-selector .crypto-select-selection-placeholder {
+    padding: 0;
+    line-height: 30px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+
+.crypto-select-selection-item {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.crypto-select-arrow {
+    display: inline-block;
+    color: inherit;
+    font-style: normal;
+    line-height: 0;
+    text-transform: none;
+    vertical-align: -.125em;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: absolute;
+    top: 53%;
+    right: 11px;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    color: var(--gray-10-30);
+    font-size: 12px;
+    line-height: 1;
+    text-align: center;
+    pointer-events: none;
+}
+
+.crypto-select-item-option-active:not(.crypto-select-item-option-disabled) {
+    background-color: var(--gray-3);
+}
+
+.crypto-select-item {
+    color: var(--gray-10-80);
+    cursor: pointer;
+    -webkit-transition: background .3s ease;
+    transition: background .3s ease;
+}
+
+.crypto-select-item,
+.crypto-select-item-empty {
+    position: relative;
+    display: block;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+}
+
+.crypto-select-item-option-content {
+    -webkit-box-flex: 1;
+    -ms-flex: auto;
+    flex: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.crypto-select-item-option-state {
+    -webkit-box-flex: 0;
+    -ms-flex: none;
+    flex: none;
+}
+
+.crypto-select-item-option-selected:not(.crypto-select-item-option-disabled) {
+    color: var(--var_gray-10-80);
+    font-weight: 600;
+    background-color: var(--blue-1);
+}
+
+.crypto-select:not(.crypto-select-customize-input) .crypto-select-selector .crypto-select-selection-search-input {
+    margin: 0;
+    padding: 0;
+    background: 0 0;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.crypto-select-single:not(.crypto-select-customize-input) .crypto-select-selector .crypto-select-selection-search-input {
+    height: 30px;
+}
+
+.crypto-select:not(.crypto-select-customize-input) .crypto-select-selector input {
+    cursor: pointer;
+}
+
+.crypto-select-single .crypto-select-selector .crypto-select-selection-search-input {
+    width: 100%;
+}
+
+.crypto-select:not(.crypto-select-disabled):hover .crypto-select-selector {
+    border-color: var(--primary-color);
+    border-right-width: 1px !important;
+}
+
+.crypto-select-focused:not(.crypto-select-disabled).crypto-select:not(.crypto-select-customize-input) .crypto-select-selector {
+    border-color: var(--primary-color);
+    border-right-width: 1px !important;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+.crypto-select-dropdown {
+    margin: 0;
+    color: var(--gray-10-80);
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    -webkit-font-feature-settings: "tnum";
+    font-feature-settings: "tnum";
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    z-index: 1050;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 4px 0;
+    overflow: hidden;
+    font-size: 14px;
+    font-variant: normal;
+    background-color: #fff;
+    border-radius: 2px;
+    outline: none;
+    -webkit-box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
+
+.crypto-select-dropdown-hidden {
+    display: none;
+}
+
+.crypto-select-item-option {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+
+
+/** Table **/
+.results-container {
+
+    /*
+	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
+	*/
+    @media only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px) {
+
+        /* Force table to not be like tables anymore */
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+            display: block;
+        }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr {
+            margin: 0 0 1rem 0;
+        }
+
+        tr:nth-child(odd) {
+            background: #ccc;
+        }
+
+        td {
+            /* Behave  like a "row" */
+            border: none;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 0;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+        }
+
+        /*
+            Label the data
+        You could also use a data-* attribute and content for this. That way "bloats" the HTML, this way means you need to keep HTML and CSS in sync. Lea Verou has a clever way to handle with text-shadow.
+            */
+        td:nth-of-type(1):before {
+            content: "Date";
+        }
+
+        td:nth-of-type(2):before {
+            content: "Coin price";
+        }
+
+        td:nth-of-type(3):before {
+            content: "Change %";
+        }
+
+        td:nth-of-type(4):before {
+            content: "Change from start %";
+        }
+
+        td:nth-of-type(5):before {
+            content: "Total investment";
+        }
+
+        td:nth-of-type(6):before {
+            content: "Balance";
+        }
+
+        td:nth-of-type(7):before {
+            content: "Profit";
+        }
+
+        td:nth-of-type(8):before {
+            content: "Profit %";
+        }
+
+    }
+
+}

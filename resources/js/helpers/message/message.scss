@@ -1,0 +1,144 @@
+.crypto-notification {
+    position: fixed;
+    z-index: 1000;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: (--gray-10-80);
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    -webkit-font-feature-settings: "tnum";
+    font-feature-settings: "tnum";
+    position: fixed;
+    top: 8px;
+    left: 0;
+    z-index: 1010;
+    width: 100%;
+    pointer-events: none;
+
+    .crypto-notification-notice {
+        padding: 8px;
+        text-align: center;
+    }
+
+    .crypto-notification-notice-closable {
+        padding-right: 20px;
+    }
+
+    .crypto-notification-notice-close {
+        position: absolute;
+        right: 5px;
+        top: 3px;
+        color: #000;
+        cursor: pointer;
+        outline: none;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1;
+        text-shadow: 0 1px 0 #fff;
+        filter: alpha(opacity=20);
+        opacity: .2;
+        text-decoration: none;
+    }
+
+    .crypto-notification-notice-close-x:after {
+        content: '\D7';
+    }
+
+    .crypto-notification-notice-close:hover {
+        opacity: 1;
+        filter: alpha(opacity=100);
+        text-decoration: none;
+    }
+
+    .crypto-notification-fade-enter {
+        opacity: 0;
+        animation-duration: 0.3s;
+        animation-fill-mode: both;
+        animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+        animation-play-state: paused;
+    }
+
+    .crypto-notification-fade-leave {
+        animation-duration: 0.3s;
+        animation-fill-mode: both;
+        animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
+        animation-play-state: paused;
+    }
+
+    .crypto-notification-fade-enter.crypto-notification-fade-enter-active {
+        animation-name: rcNotificationFadeIn;
+        animation-play-state: running;
+    }
+
+    .crypto-notification-fade-leave.crypto-notification-fade-leave-active {
+        animation-name: rcDialogFadeOut;
+        animation-play-state: running;
+    }
+
+
+    .crypto-notification-notice-content {
+        display: inline-block;
+        padding: 10px 16px;
+        background: #fff;
+        border-radius: 2px;
+        -webkit-box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+        pointer-events: all;
+    }
+
+    .crypto-notification-notice-content div {
+        display: flex;
+        align-items: center;
+    }
+
+    .success .icon {
+        color: var(--green-6);
+    }
+
+    .error .icon {
+        color: var(--red-6);
+    }
+
+    .info .icon {
+        color: var(--blue-6);
+    }
+
+    .warning .icon {
+        color: var(--orange-6);
+    }
+
+    .icon {
+        margin-right: 12px;
+        font-size: 24px;
+    }
+
+    .icon-variant {
+        opacity: 0.9;
+        margin-right: 8px;
+    }
+}
+
+
+@keyframes rcNotificationFadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes rcDialogFadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

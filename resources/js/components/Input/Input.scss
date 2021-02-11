@@ -1,0 +1,69 @@
+body {
+    --inputbox-border-color: var(--gray-5);
+}
+
+.input-container {
+    .input-box {
+        position: relative;
+        width: 100%;
+        min-width: 0;
+        padding: 4px 11px;
+        color: var(--gray-10-80);
+        font-size: 14px;
+        line-height: 1.5715;
+        background-color: var(--gray-1);
+        background-image: none;
+        border: 1px solid var(--gray-5);
+        border-radius: 2px;
+        -webkit-transition: all .3s;
+        transition: all .3s;
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+
+        svg {
+            margin: 0 6px 0 13px;
+            width: 22px;
+            height: 22px;
+        }
+
+        input,
+        input:focus {
+            flex-grow: 100;
+
+            margin-right: 13px;
+        }
+    }
+
+    .input-box:hover {
+        border: 1px solid var(--hover-color);
+    }
+
+    .input-box:active {
+        border: 1px solid var(--click-color);
+    }
+
+    .input-box:focus-within {
+        border: 1px solid var(--primary-color);
+
+        svg>path {
+            fill: var(--primary-color);
+        }
+    }
+
+    .input-suffix {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-flex: 0;
+        -ms-flex: none;
+        flex: none;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+
+    .error {
+        color: var(--error-color);
+    }
+}
