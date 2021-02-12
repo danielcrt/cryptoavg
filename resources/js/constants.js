@@ -6,3 +6,5 @@ export const DEFAULT_BACKEND_DATE_FORMAT = 'YYYY-MM-DD'
 export const DEFAULT_DATE_TIME_FORMAT = 'DD.MM.YYYY HH:mm'
 export const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY'
 export const DEFAULT_TIME_FORMAT = 'HH:mm'
+
+export const RECAPTCHA_SITE_KEY = '6LepS1UaAAAAACBQ9ow3_-B9rkAlICPvxlPWj5pw'

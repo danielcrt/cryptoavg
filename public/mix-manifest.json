@@ -1,4 +1,8 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/app.js": "/js/app.js?id=a9237cbf246ce1b43e6c",
+    "/css/app.css": "/css/app.css?id=9d4489c181047adf0e85",
+    "/images/btc_qr.png": "/images/btc_qr.png?id=af803d1d9d53ace09810",
+    "/images/coingecko.png": "/images/coingecko.png?id=703f5cdba47276328296",
+    "/images/egld_qr.png": "/images/egld_qr.png?id=b582b2e0cae1933d54d2",
+    "/images/eth_qr.png": "/images/eth_qr.png?id=64fc5497e7d76a67225f"
 }

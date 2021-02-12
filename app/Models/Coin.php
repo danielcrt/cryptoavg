@@ -55,7 +55,7 @@ class Coin extends Model
      */
     public function getFullNameAttribute(): string
     {
-        return trim($this->name . ' (' . $this->symbol . ')');
+        return trim($this->name . ' (' . strtoupper($this->symbol) . ')');
     }
 
     /**

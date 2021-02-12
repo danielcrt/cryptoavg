@@ -25,7 +25,6 @@ class CalculatorController extends Controller
             $start_date_time = DateTime::createFromFormat('Y-m-d', $start_date);
             $end_date_time = DateTime::createFromFormat('Y-m-d', $end_date);
 
-            // TODO: Add validation
             $validator = Validator::make([
                 'start_date' => $start_date,
                 'end_date' => $end_date,

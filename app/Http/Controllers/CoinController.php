@@ -13,15 +13,16 @@ class CoinController extends Controller
     {
         try {
             $q = $request->get('q');
-
             $q_coin = Coin::query();
+            $q_coin = $q_coin->where('is_available', 1);
             if ($q) {
-                $q_coin = $q_coin->where(DB::raw("CONCAT(`name`, ' ', `symbol`)"), 'LIKE', "%" . $q . "%");
+                $q_coin = $q_coin->where(DB::raw("CONCAT(`name`,' ', `symbol`)"), 'LIKE', '%' . $q . '%');
             }
             $coins = $q_coin->limit(10)->get();
             return response()->json($coins);
         } catch (\Exception $e) {
             Log::error($e);
+            return response()->json('Unexpected error!', 500);
         }
     }
 }

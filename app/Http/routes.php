@@ -19,6 +19,7 @@ Route::get('/', function () {
 Route::group(['prefix' => 'api'], function () {
     Route::post('compute', 'CalculatorController@compute');
     Route::get('coins', 'CoinController@index');
+    Route::post('contact', 'ContactController@store');
 });
 // Route::get('/coins', 'AdminController@retrieveCoins');
 // Route::get('/prices', 'AdminController@retrievePrices');

@@ -1,12 +1,17 @@
-body {
-    --select-background: var();
-    --select-background: var();
+.calculator-container {
+    h1 {
+        margin-top: 0;
+    }
+
+    width: 100%;
+    max-width: 260px;
+    margin:0 auto;
+    padding: 10px;
+    text-align: center;
 }
 
-.calculator-container {
-    margin: 0 auto;
-    max-width: 720px;
-    padding: 10px;
+.chart-container {
+    flex-grow: 1;
 }
 
 .crypto-select {
@@ -234,7 +239,62 @@ body {
 
 
 /** Table **/
-.results-container {
+.crypto-table {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: var(--gray-10-80);
+    font-variant: tabular-nums;
+    line-height: 1.5715;
+    list-style: none;
+    -webkit-font-feature-settings: "tnum";
+    font-feature-settings: "tnum";
+    position: relative;
+    font-size: 14px;
+    background: var(--gray-1);
+    border-radius: 2px;
+
+    table {
+        width: 100%;
+        text-align: left;
+        border-radius: 2px 2px 0 0;
+        border-collapse: separate;
+        border-spacing: 0;
+
+        .crypto-table-thead>tr>th {
+            color: var(--gray-10-80);
+            font-weight: 500;
+            text-align: left;
+            background: var(--gray-2);
+            border-bottom: 1px solid var(--gray-4);
+            -webkit-transition: background .3s ease;
+            transition: background .3s ease;
+        }
+
+        .crypto-table-tbody>tr>td,
+        .crypto-table-thead>tr>th,
+        .crypto-table tfoot>tr>td,
+        .crypto-table tfoot>tr>th {
+            position: relative;
+            padding: 16px;
+            overflow-wrap: break-word;
+        }
+
+        .crypto-table-tbody>tr>td {
+            border-bottom: 1px solid var(--gray-4);
+            -webkit-transition: background .3s;
+            transition: background .3s;
+
+            &.error {
+                color: var(--red-6);
+            }
+
+            &.success {
+                color: var(--green-6);
+            }
+        }
+    }
 
     /*
 	Max width before this PARTICULAR table gets nasty. This query will take effect for any screen smaller than 760px and also iPads specifically.
@@ -259,25 +319,31 @@ body {
             left: -9999px;
         }
 
-        tr {
-            margin: 0 0 1rem 0;
+        tr:nth-child(odd) {
+            background: var(--gray-4);
         }
 
-        tr:nth-child(odd) {
-            background: #ccc;
+        table .crypto-table-tbody>tr>td,
+        table .crypto-table-thead>tr>th,
+        table .crypto-table tfoot>tr>td,
+        table .crypto-table tfoot>tr>th {
+            padding: 4px;
         }
 
         td {
             /* Behave  like a "row" */
             border: none;
-            border-bottom: 1px solid #eee;
+            border-bottom: none;
             position: relative;
-            padding-left: 50%;
+        }
+
+        td:first-child {
+            font-weight: bold;
         }
 
         td:before {
             /* Now like a table header */
-            position: absolute;
+            // position: absolute;
             /* Top/left values mimic padding */
             top: 0;
             left: 6px;
@@ -321,7 +387,24 @@ body {
         td:nth-of-type(8):before {
             content: "Profit %";
         }
+    }
+}
 
+.data-provider {
+    display: inline-flex;
+    align-items: center;
+
+    p.info {
+        font-size: 14px;
+        margin-bottom: 8px;
+        margin-top: 8px;
     }
 
+    img {
+        margin-left: 4px;
+    }
+}
+
+span.info {
+    font-size: 12px;
 }

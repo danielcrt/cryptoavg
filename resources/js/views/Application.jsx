@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom';
+import Footer from '../components/Footer/Footer';
 import LoadingSpinner from '../components/LoadingSpinner';
 import NavBar from '../components/NavBar/NavBar';
 import CalculatorPage from './CalculatorPage/CalculatorPage';
@@ -20,6 +21,7 @@ function Application(props) {
                         </>
                     </Suspense>
                 </div>
+                <Footer />
             </>
         </HashRouter>
     );

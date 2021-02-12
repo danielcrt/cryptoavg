@@ -1,0 +1,28 @@
+@import '../../../scss/variables';
+
+#footer {
+    margin: 16px;
+
+    p {
+        margin: 8px;
+        overflow-wrap: anywhere;
+
+    }
+
+    .address-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media (max-width: $mobile-breakpoint) {
+        text-align: center;
+    }
+
+    img.crypto-address {
+        width: 100px;
+
+        @media (max-width: $mobile-breakpoint) {
+            width: 100%;
+        }
+    }
+}

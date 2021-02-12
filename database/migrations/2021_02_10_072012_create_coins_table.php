@@ -18,6 +18,7 @@ class CreateCoinsTable extends Migration
             $table->string('coingecko_id', 100);
             $table->string('symbol', 60);
             $table->string('name', 100);
+            $table->boolean('is_available')->default(0);
             $table->timestamps();
         });
     }
