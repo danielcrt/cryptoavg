@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { CoinService } from '../../services/coin.service'
 import { CalculatorService } from '../../services/calculator.service';
 import Input from '../../components/Input/Input';
@@ -10,18 +10,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import ArrowIcon from '../../components/icons/ArrowIcon';
 import { message } from '../../helpers/message/message';
 import moment from 'moment';
-import { DEFAULT_BACKEND_DATE_FORMAT, DEFAULT_DATE_FORMAT } from '../../constants'
+import { DEFAULT_BACKEND_DATE_FORMAT, MOBILE_BREAKPOINT } from '../../constants'
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import CoinGeckoLogo from '../../../assets/images/coingecko.png';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import ResultsTable from './ResultsTable';
+import useWindowDimenstions from '../../helpers/useWindowDimensions'
 
 function CalculatorPage(props) {
+    const firstRun = useRef(true);
+    const { width } = useWindowDimenstions();
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const [state, setState] = useState({
         cryptoCoin: 'bitcoin', // bitcoin ID
         startDate: moment().subtract(1, 'year').toDate(),
         endDate: moment().toDate(),
         investmentInterval: 'weekly',
         investedAmount: 10,
-        fees: 0.5
+        fees: 0.5,
+        loading: false,
     });
     const [loadingCoins, setLoadingCoins] = useState(true);
     const [coinsData, setCoinsData] = useState([]);
@@ -42,7 +49,12 @@ function CalculatorPage(props) {
             message.error(err.toString());
         })
     }, [])
-    const _onSubmit = () => {
+    const _onSubmit = async () => {
+        setState({
+            ...state,
+            loading: true
+        });
+        const token = await executeRecaptcha('contact_page');
         let params = {
             start_date: moment(state.startDate).format(DEFAULT_BACKEND_DATE_FORMAT),
             end_date: moment(state.endDate).format(DEFAULT_BACKEND_DATE_FORMAT),
@@ -50,11 +62,25 @@ function CalculatorPage(props) {
             investment_interval: state.investmentInterval,
             investment_amount: state.investedAmount,
             transaction_fee: state.fees,
+            recaptcha: token
         }
         CalculatorService.compute(params).then(response => {
             setResults(response);
+            setState({
+                ...state,
+                loading: false
+            });
+            if (firstRun.current === false && width < MOBILE_BREAKPOINT) {
+                var chartContainer = document.getElementById('chart-container');
+                chartContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+            firstRun.current = false;
         }).catch(err => {
             message.error(err.toString());
+            setState({
+                ...state,
+                loading: false
+            });
         });
     }
     const _onChange = (e) => {
@@ -87,8 +113,16 @@ function CalculatorPage(props) {
     }
     const investmentOptions = [
         {
+            label: 'Daily',
+            value: 'daily'
+        },
+        {
             label: 'Weekly',
             value: 'weekly'
+        },
+        {
+            label: 'Biweekly',
+            value: 'biweekly'
         },
         {
             label: 'Monthly',
@@ -103,10 +137,13 @@ function CalculatorPage(props) {
         return (Math.round((total + Number.EPSILON) * 100) / 100);
     }
     return (
-        <>
+        <div id='calculator-page'>
+            <div className='introduction'>
+                <h1>Dollar-cost averaging (DCA) calculator for cryptocurrency assets</h1>
+                <p><i>Dollar-cost averaging (DCA) is an investment strategy in which an investor divides up the total amount to be invested across periodic purchases of a target asset in an effort to reduce the impact of volatility on the overall purchase</i> - <span>source: <a target='_blank' href='https://www.investopedia.com/terms/d/dollarcostaveraging.asp' rel='noopener'>Investopedia</a></span></p>
+            </div>
             <div className='row'>
                 <div className='calculator-container'>
-                    <h1>Calculator</h1>
                     <label>Coin</label>
                     <Select
                         name='coin'
@@ -129,7 +166,7 @@ function CalculatorPage(props) {
                     <span className='info'>Cannot find you coin? Request it <a href='#' onClick={(e) => {
                         e.preventDefault();
                         var footer = document.getElementById('footer');
-                        footer.scrollIntoView();
+                        footer.scrollIntoView({ behavior: 'smooth' });
                         // window.scrollTo(0, document.body.scrollHeight);
                     }}>here</a></span>
                     <br />
@@ -174,6 +211,7 @@ function CalculatorPage(props) {
                     <br />
                     <label>Start date</label>
                     <DatePicker
+                        dateFormat="dd.MM.yyyy"
                         selected={state.startDate}
                         onChange={date => setState({ ...state, startDate: date })}
                         placeholder={'Select start date'}
@@ -183,6 +221,8 @@ function CalculatorPage(props) {
                     <br />
                     <label>End date</label>
                     <DatePicker
+                        dateFormat="dd.MM.yyyy"
+                        maxDate={moment().toDate()}
                         selected={state.endDate}
                         onChange={date => setState({ ...state, endDate: date })}
                         placeholder={'Select end date'}
@@ -190,14 +230,14 @@ function CalculatorPage(props) {
                     />
                     <br />
                     <br />
-                    <Button variant='primary' onClick={_onSubmit}>Calculate</Button>
+                    <Button variant='primary' onClick={_onSubmit} loading={state.loading}>Calculate</Button>
                     <div className='data-provider'>
                         <p className='info'>Data retrieved from </p> <a href='https://coingecko.com' target='_blank' rel='noopener'><img src={CoinGeckoLogo} alt='coingecko' height={30} /></a>
                     </div>
                 </div>
-                <div className='chart-container'>
+                <div id='chart-container'>
                     {results &&
-                        <ResponsiveContainer height="99%">
+                        <ResponsiveContainer height="99%" minHeight="500px">
                             <LineChart
                                 data={results}
                                 margin={{
@@ -221,40 +261,8 @@ function CalculatorPage(props) {
                     }
                 </div>
             </div>
-
-            {results &&
-                <div className='crypto-table'>
-                    <table role="table">
-                        <thead role="rowgroup" className='crypto-table-thead'>
-                            <tr role="row">
-                                <th role="columnheader">Date</th>
-                                <th role="columnheader">Coin price</th>
-                                <th role="columnheader">Change %</th>
-                                <th role="columnheader">Change from start %</th>
-                                <th role="columnheader">Total investment</th>
-                                <th role="columnheader">Balance</th>
-                                <th role="columnheader">Profit</th>
-                                <th role="columnheader">Profit %</th>
-                            </tr>
-                        </thead>
-                        <tbody role="rowgroup" className='crypto-table-tbody'>
-                            {results.map(row =>
-                                <tr role="row" key={row.date}>
-                                    <td role="cell">{moment(row.date).format(DEFAULT_DATE_FORMAT)}</td>
-                                    <td role="cell">{row.price}$</td>
-                                    <td role="cell" className={(row.change_percent < 0) ? 'error' : 'success'}>{row.change_percent}%</td>
-                                    <td role="cell" className={(row.change_from_start_percent < 0) ? 'error' : 'success'}>{row.change_from_start_percent}%</td>
-                                    <td role="cell">{row.total_investment}$</td>
-                                    <td role="cell" className={(row.profit < 0) ? 'error' : 'success'}>{row.balance}$</td>
-                                    <td role="cell" className={(row.profit < 0) ? 'error' : 'success'}>{row.profit}$</td>
-                                    <td role="cell" className={(row.profit < 0) ? 'error' : 'success'}>{row.profit_percent}%</td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            }
-        </>
+            <ResultsTable results={results} />
+        </div>
     )
 }
 

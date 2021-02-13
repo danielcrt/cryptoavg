@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 
-Route::group(['prefix' => 'api'], function () {
+Route::group(['prefix' => 'api', 'middleware' => 'throttle:60,60'], function () {
     Route::post('compute', 'CalculatorController@compute');
     Route::get('coins', 'CoinController@index');
     Route::post('contact', 'ContactController@store');

@@ -9,7 +9,16 @@ use Illuminate\Support\Facades\Log;
 
 class CoingeckoMarketDataJob extends Job
 {
-
+    // Query to check for duplicates
+    // SELECT p.*
+    // FROM prices p
+    // JOIN (SELECT coingecko_coin_id, date, COUNT(*)
+    // FROM prices 
+    // GROUP BY coingecko_coin_id, date
+    // HAVING count(*) > 1 ) b
+    // ON p.coingecko_coin_id = b.coingecko_coin_id
+    // AND p.date = b.date
+    // ORDER BY p.date
     private $coingecko_endpoint = 'https://api.coingecko.com/api/v3/';
 
     public function __construct()
@@ -29,7 +38,7 @@ class CoingeckoMarketDataJob extends Job
 
                 $client = new \GuzzleHttp\Client;
                 $res = $client->get(
-                    $this->coingecko_endpoint . '/coins/' . $coin_id . '/market_chart',
+                    $this->coingecko_endpoint . 'coins/' . $coin_id . '/market_chart',
                     [
                         'query' => [
                             'vs_currency' => 'usd',
@@ -39,7 +48,7 @@ class CoingeckoMarketDataJob extends Job
                     ]
                 );
                 if ($res->getStatusCode() !== 200) {
-                    return;
+                    continue;
                 }
                 $coingecko_market_chart = json_decode($res->getBody(), 1);
                 $coingecko_prices = $coingecko_market_chart['prices'];
@@ -54,7 +63,7 @@ class CoingeckoMarketDataJob extends Job
                         ]
                     );
                 }
-                Price::upsert($data, ['date', 'coingecko_coin_id'], ['price']);
+                Price::upsert($data, ['coingecko_coin_id', 'date'], ['price']);
             }
         } catch (\Exception $e) {
             Log::error($e);

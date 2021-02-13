@@ -21,6 +21,7 @@ class CalculatorController extends Controller
             $investment_interval = $request->get('investment_interval');
             $investment_amount = $request->get('investment_amount');
             $transaction_fee = $request->get('transaction_fee');
+            $recaptcha = $request->get('recaptcha');
 
             $start_date_time = DateTime::createFromFormat('Y-m-d', $start_date);
             $end_date_time = DateTime::createFromFormat('Y-m-d', $end_date);
@@ -32,6 +33,7 @@ class CalculatorController extends Controller
                 'investment_interval' => $investment_interval,
                 'investment_amount' => $investment_amount,
                 'transaction_fee' => $transaction_fee,
+                'recaptcha' => $recaptcha,
             ], [
                 'start_date' => 'required|date_format:Y-m-d',
                 'end_date' => 'required|date_format:Y-m-d',
@@ -39,10 +41,31 @@ class CalculatorController extends Controller
                 'investment_interval' => 'required|string|in:daily,weekly,biweekly,monthly',
                 'investment_amount' => 'required|numeric|min:1',
                 'transaction_fee' => 'required|numeric|min:0|max:100',
+                'recaptcha' => 'required|string',
             ]);
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
+
+            $secret_key = env('RECAPTCHA_SECRET_KEY', '');
+            $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $recaptcha;
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            $data = curl_exec($curl);
+            curl_close($curl);
+            $responseCaptchaData = json_decode($data);
+
+            // Take action based on the score returned:
+            if ($responseCaptchaData->score < 0.7) {
+                if (!$responseCaptchaData->success) {
+                    return response()->json([
+                        'error' => 'Invalid recaptcha'
+                    ], 400);
+                }
+            }
+
             $round_precision = 2;
             $interval = new DateInterval('P1D');
             switch ($investment_interval) {

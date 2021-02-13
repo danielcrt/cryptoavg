@@ -10,11 +10,21 @@ import { Provider } from 'react-redux';
 
 import { store } from './helpers';
 import Application from './views/Application';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import { RECAPTCHA_SITE_KEY } from './constants';
 
 render(
 
     <Provider store={store}>
-        <Application />
+        <GoogleReCaptchaProvider
+            reCaptchaKey={RECAPTCHA_SITE_KEY}
+            scriptProps={{
+                async: true, // optional, default to false,
+                defer: true, // optional, default to false
+            }}
+        >
+            <Application />
+        </GoogleReCaptchaProvider>
     </Provider>,
     document.getElementById('app')
 );

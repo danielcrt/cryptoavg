@@ -11,7 +11,7 @@ const Button = (props) => {
             type={type ? type : 'submit'}
             className={'button ' + variant}
             onClick={(e) => {
-                if (onClick) {
+                if (onClick && !loading) {
                     onClick(e);
                 }
             }}>

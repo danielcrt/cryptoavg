@@ -5,10 +5,10 @@ import Input from '../Input/Input';
 import TextArea from '../TextArea/TextArea';
 import './ContactForm.scss';
 import { ContactService } from '../../services/contact.service';
-import { RECAPTCHA_SITE_KEY } from '../../constants';
-import ReCAPTCHA from 'react-google-recaptcha'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 function ContactForm(props) {
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const recaptchaRef = React.createRef();
     const [state, setState] = useState({
         loading: false,
@@ -26,12 +26,12 @@ function ContactForm(props) {
         });
     }
     const _onSubmit = async () => {
+        const token = await executeRecaptcha('contact_page');
         setState({
             ...state,
             loading: true,
         });
         setErrors(null);
-        const token = await recaptchaRef.current.executeAsync();
         let params = {
             ...state,
             recaptcha: token
@@ -93,12 +93,6 @@ function ContactForm(props) {
                 onClick={() => {
                     _onSubmit();
                 }}>Send</Button>
-
-            <ReCAPTCHA
-                ref={recaptchaRef}
-                size='invisible'
-                sitekey={RECAPTCHA_SITE_KEY}
-            />
         </div>
     )
 }
